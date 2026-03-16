@@ -32,6 +32,7 @@ cftime = ">=1.6.3"
 pooch = ">=1.8.0"
 py-triangle = ">=20250106,<20250107"
 
+
 [dependencies]
 parcels = { path = "." }
 
@@ -42,7 +43,7 @@ rattler-build = "*"
 
 [feature.rattler-build.tasks]
 get-parcels-alpha-version = { cmd = "python tools/get-parcels-alpha-version.py" }
-build-parcels = { cmd = "rattler-build build --recipe .github/ci/recipe.yaml", description = "Build the Parcels conda package" }
+build-parcels = { cmd = "rattler-build build --recipe recipe.yaml", description = "Build the Parcels conda package" }
 
 [feature.minimum.dependencies]
 python = "3.11.*"
@@ -58,6 +59,6 @@ cf_xarray = "0.8.*"
 cftime = "1.6.*"
 pooch = "1.8.*"
 
-[environments]
-test-minimum = { features = ["minimum"] }
-build = { features = ["rattler-build"] }
+# [environments]
+# test-minimum = { features = ["minimum"] }
+# build = { features = ["rattler-build"] }
