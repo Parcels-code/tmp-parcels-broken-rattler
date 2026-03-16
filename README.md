@@ -6,7 +6,7 @@ This has cropped up both in our ["build-and-upload-nightly-wheels"](https://gith
 
 
 > [!NOTE]  
-> This can all be fixed by pinning `holoviews` above a certain version. I find this, however, surprising that we would need to either pin the transitive dependency `holoviews` or update the `uxarray` feedstock upstream to add these lower bounds.
+> This can all be fixed by pinning `holoviews` above a certain version. I find this, however, surprising that we would need to either pin the transitive dependency `holoviews` (listing it in the process, even though its not a direct dependency) or update the `uxarray` feedstock upstream to add these lower bounds.
 
 ## reproduction
 
