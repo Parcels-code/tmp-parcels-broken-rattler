@@ -1,5 +1,7 @@
 # parcels broken recipe
 
+> reproducer for https://github.com/prefix-dev/rattler-build/issues/2326
+
 For some reason our recipe[^1] in Parcels has stopped working because it is (through the `uxarray` dependency) pulling in outdated versions of the `holoviews` and `hvplot` dependencies. This is despite the fact that newer versions `holoviews` and `hvplot` _are_ compatible with the recipe - leading me to believe that maybe this is an edge case that the SAT solver can't handle.
 
 This has cropped up both in our ["build-and-upload-nightly-wheels"](https://github.com/Parcels-code/Parcels/actions/runs/23044173481/job/66950785315) as well as our testing workflow (though weirdly, the latter only fails for the [test-minimum environment](https://github.com/Parcels-code/Parcels/actions/runs/23044173481/job/66950785393)). Since Rattler underpins Pixi, I will focus on the first workflow. This repo provides a minimal reproducer of the recipe. The full project is available at https://github.com/Parcels-code/Parcels/commit/e47a67b657858a362cf4698d9d0f686ef4917c8f .
