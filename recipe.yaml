@@ -10,9 +10,6 @@ package:
   name: ${{ name|lower }}
   version: ${{ version }}
 
-source:
-  path: ../..
-
 build:
   number: 0
   noarch: python

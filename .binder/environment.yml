@@ -1,7 +1,0 @@
-name: parcels_binder
-channels:
-  - conda-forge
-dependencies:
-  - parcels
-  - pooch
-  - trajan
