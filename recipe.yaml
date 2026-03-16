@@ -7,6 +7,9 @@ context:
   version: ${{ env.get('PARCELS_ALPHA_VERSION', default='0.1.0dev') }}
   python_min: "3.11"
 
+source:
+  path: .
+
 package:
   name: ${{ name|lower }}
   version: ${{ version }}
