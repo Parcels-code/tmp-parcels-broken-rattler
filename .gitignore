@@ -1,0 +1,39 @@
+build/*
+docs/_build/*
+docs/_downloads
+docs/jupyter_execute/*
+docs/.jupyter_cache/*
+docs/reference
+output
+
+*.log
+*.nc
+*.nc4
+!*testfields*.nc
+out-*
+*.pyc
+**/*.zarr/*
+.DS_store
+
+.vscode
+.env
+Profile.prof
+**/.ipynb_checkpoints/*
+.cache/*
+.eggs/*
+parcels.egg-info/*
+dist/parcels*.egg
+src/parcels/_version_setup.py
+.pytest_cache
+.hypothesis
+.coverage
+
+# pixi environments
+.pixi
+*.egg-info
+
+# Ignore pixi.lock file for this project. The con of 22k lines of noise it adds to diffs is not worth
+# the minor benefit of perfectly reproducible environments for all developers (and all the tooling that would
+# be required to support that - see https://github.com/pydata/xarray/issues/10732#issuecomment-3327780806
+# for more details)
+pixi.lock

@@ -1,0 +1,74 @@
+"""
+Typing support for Parcels.
+
+This module contains type aliases used throughout Parcels as well as functions that are
+used for runtime parameter validation (to ensure users are only using the right params).
+
+"""
+
+import os
+from collections.abc import Callable, Mapping
+from datetime import datetime
+from typing import TYPE_CHECKING, Any, Literal, get_args
+
+import numpy as np
+from cftime import datetime as cftime_datetime
+
+if TYPE_CHECKING:
+    import xgcm
+
+InterpMethodOption = Literal[
+    "linear",
+    "nearest",
+    "freeslip",
+    "partialslip",
+    "bgrid_velocity",
+    "bgrid_w_velocity",
+    "cgrid_velocity",
+    "linear_invdist_land_tracer",
+    "bgrid_tracer",
+    "cgrid_tracer",
+]  # corresponds with `tracer_interp_method`
+InterpMethod = (
+    InterpMethodOption | dict[str, InterpMethodOption]
+)  # corresponds with `interp_method` (which can also be dict mapping field names to method)
+PathLike = str | os.PathLike
+Mesh = Literal["spherical", "flat"]  # corresponds with `mesh`
+VectorType = Literal["3D", "3DSigma", "2D"] | None  # corresponds with `vector_type`
+GridIndexingType = Literal["pop", "mom5", "mitgcm", "nemo", "croco"]  # corresponds with `gridindexingtype`
+NetcdfEngine = Literal["netcdf4", "xarray", "scipy"]
+TimeLike = datetime | cftime_datetime | np.datetime64
+
+KernelFunction = Callable[..., None]
+
+XgridAxis = Literal["X", "Y", "Z"]
+XgcmAxisDirection = Literal["X", "Y", "Z", "T"]
+CfAxis = XgcmAxisDirection
+XgcmAxisPosition = Literal["center", "left", "right", "inner", "outer"]
+XgcmAxes = Mapping[XgcmAxisDirection, "xgcm.Axis"]
+
+
+def _is_xarray_object(obj):  # with no imports
+    try:
+        return "xarray.core" in obj.__module__
+    except AttributeError:
+        return False
+
+
+def _validate_against_pure_literal(value, typing_literal):
+    """Uses a Literal type alias to validate.
+
+    Can't be used with ``Literal[...] | None`` etc. as its not a pure literal.
+    """
+    # TODO remove once https://github.com/pydata/xarray/issues/11209 is resolved - Xarray objects don't work normally in `in` statements
+    if _is_xarray_object(value):
+        raise ValueError(f"Invalid input type {type(value)}")
+
+    if value not in get_args(typing_literal):
+        msg = f"Invalid value {value!r}. Valid options are {get_args(typing_literal)!r}"
+        raise ValueError(msg)
+
+
+# Assertion functions to clean user input
+def assert_valid_mesh(value: Any):
+    _validate_against_pure_literal(value, Mesh)
